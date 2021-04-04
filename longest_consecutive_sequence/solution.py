@@ -1,22 +1,22 @@
-def solution(nums:
-    '''easy solution using sorting
+def solution(nums):
+    '''Easy solution using sorting
 
     Complexity - Time: O(NlogN), Space O(1)
     Issue: Destroys input - doesn't maintain ordering
     '''
 
+    # easy way to remove duplicates
     nums = list(set(nums))
+
     if not nums:
-        return 0 
+        return [] 
     
     if len(nums) == 1:
-        return 1  
+        return [nums[0], nums[0]]  
     
     nums.sort()
     
-    start = 0 
-    max_range = 1 
-    
+    start, max_range = 0, 1 
     result = []
     for index in range(1, len(nums)):
         if nums[index] == nums[index - 1] + 1:
@@ -30,7 +30,7 @@ def solution(nums:
     return result
 
 def solution(nums):
-    '''Solution without sorting 
+    '''Improve runtime by avoiding sorting 
 
     Build bi-directional graph
     Each edge represent continuous sequence
@@ -47,8 +47,12 @@ def solution(nums):
     '''
     nums = set(nums)
 
-    if len(nums) < 2:
-        return len(nums)
+    if not nums:
+        return []
+
+    if len(nums) == 1:
+        nums = list(nums)
+        return [nums[0], nums[0]]
 
     # build graph
     graph = {}
@@ -89,7 +93,7 @@ def solution(nums):
           
     return result
     
-def solution(self, nums: List[int]) -> int:
+def solution(nums):
     '''Earlier solution builds graph - however one optimization could be 
     to build graph dynamically while performing BFS 
 
@@ -101,10 +105,14 @@ def solution(self, nums: List[int]) -> int:
     > queue is still required for BFS
     '''
     nums = set(nums)
-    
-    if len(nums) < 2:
-        return len(nums)
-    
+   
+    if not nums:
+        return []
+
+    if len(nums) == 1:
+        nums = list(nums)
+        return [nums[0], nums[0]]
+
     visited = set()
     result = []
     max_range = 1 
@@ -128,6 +136,7 @@ def solution(self, nums: List[int]) -> int:
                 result = [current_min, current_max]
                 
             for item in [current + 1, current - 1]:
+                # nums as set ensures O(1) instead of O(N) 
                 if item in nums and item not in visited:
                     q.append(item)
           
@@ -147,8 +156,11 @@ def solution(nums):
         compressed[num].append(index)
    
     # guard condition - for early exit
-    if len(compressed) < 2:
-        return len(compressed)
+    if not compressed:
+        return {}, []
+
+    if len(compressed) == 1:
+        return compressed, [nums[0], nums[0]]
    
     # bfs - building dynamic graph
     visited = set()
