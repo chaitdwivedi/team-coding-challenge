@@ -73,10 +73,8 @@ def solution(nums):
         if num in visited:
             continue 
         current_min, current_max = num, num
-        q = deque()
-        
-        q.append(num)
-        
+        q = deque([num])
+ 
         while q:
             current = q.popleft()
             visited.add(current)
@@ -116,14 +114,9 @@ def solution(nums):
     visited = set()
     result = []
     max_range = 1 
-    for num in nums:
-        if num in visited:
-            continue
-            
+    for num in (nums - visited):
         current_min, current_max = num, num
-        q = deque()
-        
-        q.append(num)
+        q = deque([num])
         
         while q:
             current = q.popleft()
@@ -171,9 +164,7 @@ def solution(nums):
             continue
             
         current_min, current_max = num, num
-        q = deque()
-        
-        q.append(num)
+        q = deque([num])
         
         while q:
             current = q.popleft()
@@ -186,7 +177,7 @@ def solution(nums):
                 result = [current_min, current_max]
                 
             for item in [current + 1, current - 1]:
-                if item in nums and item not in visited:
+                if item in compressed and item not in visited:
                     q.append(item)
           
     return compressed, result
